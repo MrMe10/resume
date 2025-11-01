@@ -84,7 +84,7 @@ export function Education() {
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex gap-2">
                   <span className="text-accent">→</span>
-                  Attended TEDx "A Twist of Tales"
+                  Running a 5km marathon at the NPMA golden Jubilee 10k run 
                 </li>
                 <li className="flex gap-2">
                   <span className="text-accent">→</span>
