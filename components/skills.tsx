@@ -33,10 +33,10 @@ const skillCategories = [
 
 export function Skills() {
   return (
-    <section id="skills" className="py-20 px-4 bg-background">
-      <div className="max-w-6xl mx-auto space-y-12">
-        <div className="space-y-4">
-          <h2 className="text-4xl sm:text-5xl font-bold text-foreground">Skills & Expertise</h2>
+    <section id="skills" className="py-32 px-4 bg-background/50">
+      <div className="max-w-6xl mx-auto space-y-16">
+        <div className="space-y-4 text-center md:text-left">
+          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground">Skills & Expertise</h2>
           <p className="text-lg text-muted-foreground max-w-2xl">
             A comprehensive overview of my technical abilities and professional competencies.
           </p>
@@ -48,18 +48,21 @@ export function Skills() {
             return (
               <div
                 key={index}
-                className="bg-card rounded-xl p-6 border border-border hover:border-accent transition-colors"
+                className="group bg-card border border-border rounded-2xl p-8 hover:border-primary/20 hover:shadow-lg transition-all duration-300"
               >
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-3 bg-accent/20 rounded-lg">
-                    <Icon className="text-accent" size={24} />
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="p-3 bg-primary/10 rounded-xl group-hover:bg-primary/20 transition-colors">
+                    <Icon className="text-primary" size={24} />
                   </div>
                   <h3 className="text-xl font-bold text-foreground">{category.title}</h3>
                 </div>
 
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-3">
                   {category.skills.map((skill, i) => (
-                    <span key={i} className="px-3 py-1 bg-accent/15 text-accent rounded-full text-sm font-medium">
+                    <span
+                      key={i}
+                      className="px-4 py-1.5 bg-secondary text-secondary-foreground rounded-full text-sm font-medium border border-border/50 hover:border-primary/30 transition-colors cursor-default"
+                    >
                       {skill}
                     </span>
                   ))}

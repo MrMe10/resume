@@ -1,12 +1,29 @@
-// ...existing code...
 "use client"
 
-import { useState } from "react"
-import { Github, Linkedin, Mail, ArrowRight } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Github, Linkedin, Mail, ArrowRight, ChevronDown } from "lucide-react"
 
 export function Hero() {
   const email = "austinvas992@gmail.com"
   const [copied, setCopied] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const [text, setText] = useState("")
+  const fullText = "Software Developer"
+
+  useEffect(() => {
+    setMounted(true)
+    let currentIndex = 0
+    const interval = setInterval(() => {
+      if (currentIndex <= fullText.length) {
+        setText(fullText.slice(0, currentIndex))
+        currentIndex++
+      } else {
+        clearInterval(interval)
+      }
+    }, 100)
+
+    return () => clearInterval(interval)
+  }, [])
 
   const copyEmail = async () => {
     try {
@@ -26,41 +43,52 @@ export function Hero() {
   }
 
   return (
-    <section className="min-h-[calc(100vh-64px)] flex items-center justify-center bg-gradient-to-b from-primary to-background px-4">
-      <div className="max-w-4xl mx-auto text-center space-y-8">
+    <section className="relative min-h-[calc(100vh-64px)] flex items-center justify-center overflow-hidden bg-background px-4 pt-16 pb-32">
+      {/* Background Effects */}
+      <div className="absolute inset-0 w-full h-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-primary/20 opacity-20 blur-[100px]"></div>
+
+      <div className={`max-w-4xl mx-auto text-center space-y-8 relative z-10 transition-all duration-1000 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
         <div className="space-y-4">
-          <h1 className="text-5xl sm:text-7xl font-bold text-primary-foreground">Austin Neil Vas</h1>
-          <p className="text-xl sm:text-2xl text-primary-foreground/80">Software Developer & Full-Stack Enthusiast</p>
+          <div className="inline-block px-3 py-1 mb-4 text-xs font-medium tracking-wider text-primary uppercase bg-primary/10 rounded-full animate-in fade-in zoom-in duration-500 delay-100">
+            Available for work
+          </div>
+          <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight text-foreground animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
+            Austin Neil Vas
+          </h1>
+          <p className="text-xl sm:text-2xl md:text-3xl text-muted-foreground font-light h-10">
+            {text}<span className="animate-pulse text-primary">|</span> & <span className="text-foreground font-medium animate-in fade-in slide-in-from-bottom-4 duration-700 delay-500 fill-mode-backwards">Full-Stack Enthusiast</span>
+          </p>
         </div>
 
-        <p className="text-lg text-primary-foreground/70 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-lg text-muted-foreground/80 max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-700 delay-700 fill-mode-backwards">
           I build beautiful, user-friendly applications using React, Next.js, and modern web technologies. Passionate
           about creating seamless experiences and exploring artificial intelligence.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-1000 fill-mode-backwards">
           <a
             href="#projects"
-            className="inline-flex items-center justify-center px-8 py-3 bg-accent text-accent-foreground font-semibold rounded-lg hover:bg-opacity-90 transition-all group"
+            className="inline-flex items-center justify-center px-8 py-3 bg-primary text-primary-foreground font-semibold rounded-full hover:bg-primary/90 hover:scale-105 transition-all duration-300 shadow-lg shadow-primary/20 group"
           >
             View My Work
             <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={20} />
           </a>
           <a
             href="#contact"
-            className="inline-flex items-center justify-center px-8 py-3 border-2 border-accent text-accent font-semibold rounded-lg hover:bg-accent hover:text-accent-foreground transition-all"
+            className="inline-flex items-center justify-center px-8 py-3 border border-border bg-background/50 backdrop-blur-sm text-foreground font-semibold rounded-full hover:bg-accent hover:text-accent-foreground hover:border-accent transition-all duration-300"
           >
             Get in Touch
           </a>
         </div>
 
-        <div className="relative">
+        <div className="relative animate-in fade-in slide-in-from-bottom-4 duration-700 delay-1000 fill-mode-backwards">
           <div className="flex justify-center gap-6 pt-8">
             <a
               href="https://github.com/MrMe10"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 bg-primary-foreground/10 text-primary-foreground rounded-lg hover:bg-primary-foreground/20 transition-colors"
+              className="p-3 text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-full transition-all duration-300 hover:scale-110"
               aria-label="GitHub"
             >
               <Github size={24} />
@@ -71,39 +99,32 @@ export function Hero() {
                 e.preventDefault()
                 copyEmail()
               }}
-              className="p-3 bg-primary-foreground/10 text-primary-foreground rounded-lg hover:bg-primary-foreground/20 transition-colors cursor-pointer"
+              className="p-3 text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-full transition-all duration-300 hover:scale-110 cursor-pointer relative"
               aria-label={copied ? "Email copied to clipboard" : "Copy email"}
-              title={copied ? "Copied!" : "Copy email"}
             >
               <Mail size={24} />
+              {copied && (
+                <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-foreground text-background text-xs rounded shadow-lg animate-in fade-in zoom-in duration-200">
+                  Copied!
+                </span>
+              )}
             </a>
             <a
               href="https://www.linkedin.com/in/austin-vas-5763952b5/"
-              className="p-3 bg-primary-foreground/10 text-primary-foreground rounded-lg hover:bg-primary-foreground/20 transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-full transition-all duration-300 hover:scale-110"
               aria-label="LinkedIn"
             >
               <Linkedin size={24} />
             </a>
           </div>
-
-          {/* visual toast/tooltip */}
-          {copied && (
-            <div
-              role="status"
-              aria-live="polite"
-              className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-primary-foreground text-background text-sm px-3 py-1 rounded shadow-md"
-            >
-              Copied!
-            </div>
-          )}
-
-          {/* screen-reader live region (keeps announcement when not visible) */}
-          <div aria-live="polite" className="sr-only">
-            {copied ? "Email copied to clipboard" : ""}
-          </div>
         </div>
+      </div>
+
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-muted-foreground/50">
+        <ChevronDown size={32} />
       </div>
     </section>
   )
 }
-// ...existing code...

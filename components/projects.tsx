@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image"
-import { ExternalLink } from "lucide-react"
+import { ExternalLink, ArrowUpRight } from "lucide-react"
 import React from "react"
 
 const projects = [
@@ -36,7 +36,7 @@ function EasyfolioLogo() {
     <div
       role="img"
       aria-label="Easyfolio logo"
-      className="bg-black rounded-md inline-flex items-center justify-center p-2"
+      className="inline-flex items-center justify-center p-4"
       style={{ minWidth: 220 }}
     >
       <div className="text-3xl font-bold text-white">
@@ -59,12 +59,12 @@ function NoneyaLogo() {
         alt="Noneya logo"
         width={80}
         height={80}
-        className="rounded-lg object-cover "
+        className="rounded-xl object-cover"
       />
 
       <div className="text-left">
         <div className="text-2xl font-bold text-black">Noneya</div>
-        <div className="text-sm text-black">AI Stock Market Assistant</div>
+        <div className="text-sm text-black/70">AI Stock Market Assistant</div>
       </div>
     </div>
   )
@@ -83,12 +83,12 @@ function AlumniLogo() {
         alt="Alumni Connect logo"
         width={80}
         height={80}
-        className="rounded-lg object-cover "
+        className="rounded-xl object-cover"
       />
 
       <div className="text-left">
         <div className="text-2xl font-bold text-black">Alumni Connect</div>
-        <div className="text-sm text-black">Community & Networking</div>
+        <div className="text-sm text-black/70">Community & Networking</div>
       </div>
     </div>
   )
@@ -96,29 +96,35 @@ function AlumniLogo() {
 
 export function Projects() {
   return (
-    <section id="projects" className="py-20 px-4 bg-background">
-      <div className="max-w-6xl mx-auto space-y-12">
-        <div className="space-y-4">
-          <h2 className="text-4xl sm:text-5xl font-bold text-foreground">Featured Projects</h2>
+    <section id="projects" className="py-32 px-4 bg-background relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute right-0 top-1/4 -z-10 h-[500px] w-[500px] rounded-full bg-accent/5 opacity-20 blur-[100px]"></div>
+
+      <div className="max-w-6xl mx-auto space-y-16">
+        <div className="space-y-4 text-center md:text-left">
+          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground">Featured Projects</h2>
           <p className="text-lg text-muted-foreground max-w-2xl">
             A selection of projects I've built using modern web technologies and best practices.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
             <div
               key={index}
-              className="group bg-card border border-border rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300"
+              className="group relative bg-card/50 backdrop-blur-sm border border-border rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-1"
             >
               <div
                 className={
                   index === 1 || index === 2
-                    ? "bg-white h-48 flex items-center justify-center p-8 border-1"
-                    : "bg-gradient-to-br from-primary to-primary/50 h-48 flex items-center justify-center p-8 border-1"
+                    ? "bg-white h-64 flex items-center justify-center p-8 border-b border-border/50 relative overflow-hidden"
+                    : "bg-gradient-to-br from-zinc-900 to-zinc-800 h-64 flex items-center justify-center p-8 border-b border-border/50 relative overflow-hidden"
                 }
               >
-                <div className="text-center">
+                {/* Overlay on hover */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
+
+                <div className="text-center transform group-hover:scale-105 transition-transform duration-500">
                   {project.title === "Easyfolio" ? (
                     <EasyfolioLogo />
                   ) : index === 1 ? (
@@ -126,31 +132,41 @@ export function Projects() {
                   ) : index === 2 ? (
                     <AlumniLogo />
                   ) : (
-                    <h3 className="text-2xl font-bold text-primary-foreground">{project.title}</h3>
+                    <h3 className="text-3xl font-bold text-primary-foreground">{project.title}</h3>
                   )}
                 </div>
               </div>
 
-              <div className="p-6 space-y-4">
-                <p className="text-card-foreground text-sm leading-relaxed">{project.description}</p>
+              <div className="p-8 space-y-6">
+                <div className="space-y-2">
+                  <h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {project.description}
+                  </p>
+                </div>
 
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech, i) => (
-                    <span key={i} className="px-3 py-1 bg-accent/20 text-accent text-xs font-semibold rounded-full">
+                    <span
+                      key={i}
+                      className="px-3 py-1 bg-secondary text-secondary-foreground text-xs font-medium rounded-full border border-border/50"
+                    >
                       {tech}
                     </span>
                   ))}
                 </div>
 
-                <div className="flex gap-3 pt-4">
+                <div className="pt-2">
                   <a
                     href={project.links.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 border border-accent text-accent rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors text-sm font-medium"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors group/link"
                   >
-                    <ExternalLink size={16} />
-                    Visit
+                    Visit Project
+                    <ArrowUpRight size={16} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
                   </a>
                 </div>
               </div>
