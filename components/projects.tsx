@@ -29,6 +29,14 @@ const projects = [
       demo: "https://aloymni.vercel.app/",
     },
   },
+  {
+    title: "Cuber",
+    description: "Cuber is a modern speedcubing platform featuring a realistic 3D interactive cube, pattern explorer, and professional timer to help enthusiasts master the Rubik's Cube.",
+    technologies: ["Next.js", "Three.js", "React"],
+    links: {
+      demo: "#",
+    },
+  },
 ]
 
 function EasyfolioLogo() {
@@ -94,6 +102,20 @@ function AlumniLogo() {
   )
 }
 
+function CuberLogo() {
+  return (
+    <div className="absolute inset-0 w-full h-full">
+      <Image
+        src="/images/cuber.png"
+        alt="Cuber - Modern speedcubing platform"
+        fill
+        className="object-cover"
+        sizes="(max-width: 768px) 100vw, 50vw"
+      />
+    </div>
+  )
+}
+
 export function Projects() {
   return (
     <section id="projects" className="py-32 px-4 bg-background relative overflow-hidden">
@@ -116,7 +138,7 @@ export function Projects() {
             >
               <div
                 className={
-                  index === 1 || index === 2
+                  project.title === "Noneya - AI Stock Market Assistant" || project.title === "Alumni Connect"
                     ? "bg-white h-64 flex items-center justify-center p-8 border-b border-border/50 relative overflow-hidden"
                     : "bg-gradient-to-br from-zinc-900 to-zinc-800 h-64 flex items-center justify-center p-8 border-b border-border/50 relative overflow-hidden"
                 }
@@ -124,14 +146,17 @@ export function Projects() {
                 {/* Overlay on hover */}
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
 
-                <div className="text-center transform group-hover:scale-105 transition-transform duration-500">
+                {/* Cuber uses full-bleed image */}
+                {project.title === "Cuber" && <CuberLogo />}
+
+                <div className={`text-center transform group-hover:scale-105 transition-transform duration-500 ${project.title === "Cuber" ? "hidden" : ""}`}>
                   {project.title === "Easyfolio" ? (
                     <EasyfolioLogo />
-                  ) : index === 1 ? (
+                  ) : project.title === "Noneya - AI Stock Market Assistant" ? (
                     <NoneyaLogo />
-                  ) : index === 2 ? (
+                  ) : project.title === "Alumni Connect" ? (
                     <AlumniLogo />
-                  ) : (
+                  ) : project.title === "Cuber" ? null : (
                     <h3 className="text-3xl font-bold text-primary-foreground">{project.title}</h3>
                   )}
                 </div>
