@@ -26,7 +26,7 @@ const projects = [
     description: "A social platform enabling alumni to maintain connections with their school and college communities.",
     technologies: ["Supabase", "Next.js", "Shadcn"],
     links: {
-      demo: "https://aloymni.vercel.app/",
+      demo: "https://aloymni.in/",
     },
   },
   {
